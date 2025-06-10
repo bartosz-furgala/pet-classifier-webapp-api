@@ -34,16 +34,20 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      # UWAGA: USUWAMY KROK Z ZIPOWANIEM!
+      # - name: Zip artifact for deployment
+      #   run: zip release.zip ./* -r
 
+      # Zamiast zipa, przekażemy cały katalog jako artefakt
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
+          name: python-app # Nazwa artefaktu
+          path: .           # UPLOADUJEMY CAŁY BIEŻĄCY KATALOG (czyli Twoje repo)
+          # Zapewniamy, że venv jest wykluczone z artefaktu, aby nie zajmowało miejsca
+          # Jeśli masz inne duże katalogi, które nie są potrzebne na serwerze (np. .git), też możesz je wykluczyć
+          retention-days: 1 # Opcjonalnie: ile dni przechowywać artefakt
+          if-no-files-found: error # Ważne: rzuć błąd, jeśli nie znajdzie plików
 
   deploy:
     runs-on: ubuntu-latest
@@ -60,10 +64,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
+          path: . # POBIERAMY ARTEFAKT DO BIEŻĄCEGO KATALOGU
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
-
+      # UWAGA: USUWAMY KROK Z ROZPAKOWYWANIEM!
+      # - name: Unzip artifact for deployment
+      #   run: unzip release.zip
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -78,4 +83,5 @@ jobs:
         with:
           app-name: 'pet-classifier-app'
           slot-name: 'Production'
-          
+          # DODAJEMY PARAMETR 'package' WSKAZUJĄCY NA BIEŻĄCY KATALOG!
+          package: . # To jest kluczowa zmiana! Wdrażamy zawartość bieżącego katalogu.
