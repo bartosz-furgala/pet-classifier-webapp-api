@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizator Zwierząt AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/img/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <h1>Co jest na zdjęciu? 🐕 czy 🐈</h1>
+        <p>Wgraj zdjęcie, a ja spróbuję odgadnąć, czy to pies, czy kot i jakiej jest rasy!</p>
+
+        <div class="upload-area">
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+            <button id="selectImageButton" class="button">Wybierz zdjęcie</button>
+            <p id="imageFileName" class="file-name">Brak pliku</p>
+            <div class="image-preview-container">
+                <img id="imagePreview" src="#" alt="Podgląd obrazu" class="image-preview" style="display: none;">
+            </div>
+        </div>
+
+        <button id="analyzeButton" class="button primary" disabled>🔎 Analizuj!</button>
+
+        <div class="results-container">
+            <h2>Wyniki Analizy:</h2>
+            <div id="loadingIndicator" class="loader" style="display: none;"></div>
+
+            <div id="animalTypeResults" class="result-box" style="display: none;">
+                <p><strong>Typ:</strong> <span id="animalType">--</span></p>
+                <p><strong>Pewność typu:</strong> <span id="animalConfidence">--</span></p>
+                <p id="animalTypeError" class="error-message" style="display: none;"></p>
+            </div>
+
+            <div id="breedResults" class="result-box" style="display: none;">
+                <p><strong>Sugerowane rasy:</strong></p>
+                <ul id="breedList">
+                    </ul>
+                <p id="breedError" class="error-message" style="display: none;"></p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Bartosz Furgała & Kamil Łaby</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', path='/js/script.js') }}"></script>
+</body>
+</html>

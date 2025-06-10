@@ -1,0 +1,9 @@
+# pet-classifier-webapp/requirements.txt
+  azure-cognitiveservices-vision-customvision
+  fastapi
+  uvicorn[standard]
+  python-multipart
+  Pillow
+  jinja2
+  python-dotenv
+  httpx>=0.27.0

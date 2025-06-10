@@ -1,0 +1,301 @@
+/* style.css - Wersja V7, z dynamicznym dostosowaniem proporcji obrazu, nowym kolorem wyników i poprawioną ścieżką do tła, Bartek! */
+
+:root {
+    --primary-color: #6a1b9a; /* Głęboki Fiolet */
+    --primary-dark-color: #4a148c; /* Ciemniejszy Fiolet */
+    --secondary-color: #ffa000; /* Ciepły Pomarańcz (Akcent) */
+    --accent-color: #03a9f4; /* Jasny Niebieski (Dla przycisków pomocniczych) */
+    --text-color: #333333; /* Ciemniejszy tekst */
+    --bg-color: #e8eaf6; /* Bardzo jasny Niebieski/Fioletowy (Delikatne tło) */
+    --card-bg-color: #ffffff; /* Czysta biel dla kart */
+    --border-color: #c5cae9; /* Delikatniejsza ramka */
+    --error-color: #d32f2f; /* Klasyczna czerwień dla błędów */
+    --success-color: #388e3c; /* Zielony dla sukcesów */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08); /* Lżejszy cień */
+    --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.12); /* Wyraźniejszy cień dla kontenera */
+
+    /* Nowy kolor dla wyników analizy */
+    --result-box-bg-color: #a6b8f4; /* Hex: #a6b8f4, RGB: rgb(166, 184, 244) */
+}
+
+body {
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color); /* Podstawowy kolor tła */
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    box-sizing: border-box;
+    line-height: 1.6;
+
+    /* --- POPRAWIONA ŚCIEŻKA DO OBRAZKA TŁA! --- */
+    background-image: url('tło.jpg'); /* Ścieżka RELATYWNA, bo plik tło.jpg jest w tym samym folderze co style.css */
+    background-repeat: repeat; /* Powtarzaj obrazek, jeśli to wzór */
+    background-size: auto; /* Nie skaluj go, użyj rzeczywistego rozmiaru patternu */
+    background-position: center top; /* Start z góry i wyśrodkowany */
+    background-attachment: fixed; /* Tło pozostaje na miejscu podczas scrollowania */
+}
+
+.container {
+    background-color: var(--card-bg-color); /* Biel, aby główny kontener się wyróżniał */
+    padding: 35px 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-medium);
+    width: 100%;
+    max-width: 750px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1; /* Upewnij się, że jest nad tłem */
+}
+
+h1 {
+    color: var(--primary-dark-color);
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+h2 {
+    color: var(--primary-color);
+    font-size: 1.8em;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 12px;
+    font-size: 1.05em;
+    color: #555555;
+}
+
+.upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 30px 0;
+    background-color: #f7f8fc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--primary-color);
+    background-color: #eff0f9;
+}
+
+.button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 13px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.15em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    box-shadow: var(--shadow-light);
+}
+
+.button:hover {
+    background-color: #0288d1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.button.primary {
+    background-color: var(--primary-color);
+    margin-top: 25px;
+}
+
+.button.primary:hover {
+    background-color: var(--primary-dark-color);
+}
+
+.file-name {
+    margin-top: 15px;
+    font-size: 1em;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.image-preview-container {
+    margin-top: 25px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-light);
+    min-height: 150px;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
+.results-container {
+    margin-top: 40px;
+    text-align: left;
+    border-top: 1px solid var(--border-color);
+    padding-top: 25px;
+}
+
+.result-box {
+    background-color: var(--result-box-bg-color); /* Nowy kolor #a6b8f4 */
+    border: 1px solid #8ba3ed;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-light);
+}
+
+.result-box p {
+    margin: 8px 0;
+    font-size: 1.05em;
+    color: var(--text-color);
+}
+
+.result-box strong {
+    color: var(--primary-dark-color);
+    font-weight: 600;
+}
+
+ul#breedList {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+}
+
+ul#breedList li {
+    background-color: #cdd8f9;
+    color: #4a148c;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.error-message {
+    color: var(--error-color);
+    font-weight: bold;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 1.1em;
+    background-color: #ffebee;
+    border: 1px solid var(--error-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Loader Spinners */
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--accent-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #777777;
+    border-top: 1px solid #eeeeee;
+    padding-top: 20px;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px 20px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.6em;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .image-preview-container {
+        max-width: 400px;
+        min-height: 120px;
+    }
+    .image-preview {
+        max-height: 400px;
+    }
+    .upload-area {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    .button {
+        font-size: 0.9em;
+        padding: 8px 15px;
+    }
+    .image-preview-container {
+        max-width: 300px;
+        min-height: 100px;
+    }
+    .image-preview {
+        max-height: 300px;
+    }
+}
